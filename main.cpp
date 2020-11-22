@@ -20,6 +20,7 @@ int getMax(int max, int row, int col)
     return 0;
   }
   cout << row << " - " << col << " - " << max << endl;
+  
   int max_temp = 0;
   for(int i = 0; i < col_size; i++)
   {
