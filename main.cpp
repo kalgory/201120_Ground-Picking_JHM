@@ -9,13 +9,41 @@
 #include <vector>
 
 using namespace std;
+vector<vector<int>> land_vec_vec;
+vector<int>::size_type row_size;
+vector<int>::size_type col_size;
 
-
-int solution(vector<vector<int>> land_vec_vec)
+int getMax(int max, int row, int col)
 {
-  int output = 0;
+  if (row == row_size)
+  {
+    return 0;
+  }
+  cout << row << " - " << col << " - " << max << endl;
+  int max_temp = 0;
+  for(int i = 0; i < col_size; i++)
+  {
+    if(i != col)
+    {
+      continue;
+    }
+    int temp = getMax(max + land_vec_vec[row][col], row + 1, i);
+    if(max_temp < temp)
+    {
+      max_temp = temp;
+    }
+
+  }
   
-  
+  return max_temp;
+}
+
+int solution(vector<vector<int>> land_vec_vec_temp)
+{
+  land_vec_vec = land_vec_vec_temp;
+  row_size = land_vec_vec.size();
+  col_size = land_vec_vec[0].size();
+  int output = getMax(0, 0, 0);
   
   return output;
 }
