@@ -7,12 +7,15 @@
 
 #include <iostream>
 #include <vector>
-
+#include <algorithm>
 using namespace std;
+
+
 vector<vector<int>> land_vec_vec;
 vector<vector<int>> memo_vec_vec;
 vector<int>::size_type row_size;
 vector<int>::size_type col_size;
+
 
 int getMax(int row, int col)
 {
@@ -24,23 +27,16 @@ int getMax(int row, int col)
   {
     return memo_vec_vec[row][col];
   }
-  
-  int max = 0;
-  
+  int max_temp = 0;
   for (int i = 0; i < col_size; i++)
   {
     if (i == col)
     {
       continue;
     }
-    int max_temp = getMax(row + 1, i);
-    
-    if (max < max_temp)
-    {
-      max = max_temp;
-    }
+    max_temp = max(max_temp, getMax(row + 1, i));
   }
-  memo_vec_vec[row][col] = land_vec_vec[row][col] + max;
+  memo_vec_vec[row][col] = land_vec_vec[row][col] + max_temp;
   return memo_vec_vec[row][col];
 }
 
@@ -54,13 +50,8 @@ int solution(vector<vector<int>> land_vec_vec_temp)
   int output = 0;
   for (int i = 0; i < col_size; i++) // 각각의 열에서 출발
   {
-    int max_temp = getMax(0, i);
-    if (output <max_temp)
-    {
-      output = max_temp;
-    }
+    output = max(output, getMax(0, i));
   }
-  
   return output;
 }
 
